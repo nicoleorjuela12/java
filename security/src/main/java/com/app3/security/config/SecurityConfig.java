@@ -3,6 +3,8 @@ package com.app3.security.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.HttpBasicDsl;
@@ -11,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -37,25 +41,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPaswordEncoder (null);
-        provider.setUserDetailsService (null);
+        provider. setPasswordEncoder(null);
+        provider. setUserDetailsService(null);
         return provider;
+
     }
 
-    @Bean 
-    public UserDetailsService   userDetailsService   (){
-        UserDetails userDetails = User.withUsername("nicole")
-        .password(3456)
-        .roles ("ADMIN")
-        .authorities("READ", "CREATE")
-
-        return new InMemoryUserDetailsManager(userDetails)
+    public PasswordEncoder passwordEncoder() {
+        return new
     }
 
-    @Bean
-    public PasswordEncoder  passwordEncoder (){
-        return No0pPasswordEncoder.getInstance();
-    }
 }
